@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'preact/hooks';
-import { Copy, Eye, EyeOff, File, FileText, LayoutGrid, Pencil, Plus, RefreshCw, Send as SendIcon, Trash2 } from 'lucide-preact';
+import { CheckCheck, Copy, Eye, EyeOff, File, FileText, LayoutGrid, Pencil, Plus, RefreshCw, Save, Send as SendIcon, Trash2, X } from 'lucide-preact';
 import type { Send, SendDraft } from '@/lib/types';
 import { t } from '@/lib/i18n';
 
@@ -224,10 +224,12 @@ export default function SendsPage(props: SendsPageProps) {
               setSelectedMap(map);
             }}
           >
+            <CheckCheck size={14} className="btn-icon" />
             {t('txt_select_all')}
           </button>
           {!!selectedCount && (
             <button type="button" className="btn btn-secondary small" onClick={() => setSelectedMap({})}>
+              <X size={14} className="btn-icon" />
               {t('txt_cancel')}
             </button>
           )}
@@ -364,8 +366,12 @@ export default function SendsPage(props: SendsPageProps) {
               </label>
             </div>
             <div className="detail-actions">
-              <button type="button" className="btn btn-primary small" disabled={busy} onClick={() => void saveDraft()}>{t('txt_save')}</button>
-              <button type="button" className="btn btn-secondary small" disabled={busy} onClick={() => { setIsEditing(false); setIsCreating(false); setDraft(null); setShowPassword(false); }}>{t('txt_cancel')}</button>
+              <button type="button" className="btn btn-primary small" disabled={busy} onClick={() => void saveDraft()}>
+                <Save size={14} className="btn-icon" /> {t('txt_save')}
+              </button>
+              <button type="button" className="btn btn-secondary small" disabled={busy} onClick={() => { setIsEditing(false); setIsCreating(false); setDraft(null); setShowPassword(false); }}>
+                <X size={14} className="btn-icon" /> {t('txt_cancel')}
+              </button>
             </div>
           </div>
         )}

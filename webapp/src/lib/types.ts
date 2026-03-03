@@ -28,6 +28,17 @@ export interface CipherLoginUri {
   decUri?: string;
 }
 
+export interface CipherAttachment {
+  id?: string;
+  url?: string | null;
+  fileName?: string | null;
+  decFileName?: string;
+  key?: string | null;
+  size?: string | number | null;
+  sizeName?: string | null;
+  object?: string;
+}
+
 export interface CipherLoginPasskey {
   creationDate?: string | null;
   [key: string]: unknown;
@@ -111,6 +122,7 @@ export interface CipherField {
   type?: number | string | null;
   name?: string | null;
   value?: string | null;
+  linkedId?: number | null;
   decName?: string;
   decValue?: string;
 }
@@ -127,10 +139,13 @@ export interface Cipher {
   creationDate?: string;
   revisionDate?: string;
   deletedDate?: string | null;
+  attachments?: CipherAttachment[] | null;
   login?: CipherLogin | null;
   card?: CipherCard | null;
   identity?: CipherIdentity | null;
   sshKey?: CipherSshKey | null;
+  secureNote?: { type?: number | null } | null;
+  passwordHistory?: Array<{ password?: string | null; lastUsedDate?: string | null }> | null;
   fields?: CipherField[] | null;
   decName?: string;
   decNotes?: string;

@@ -321,6 +321,7 @@ input[type='file'].input::file-selector-button:hover {
   width: 100%;
   height: 50px;
   font-size: 22px;
+  margin: 10px 0;
 }
 
 .btn.small {
@@ -930,6 +931,74 @@ input[type='file'].input::file-selector-button:hover {
   flex-shrink: 0;
 }
 
+.attachment-list {
+  display: grid;
+  gap: 0;
+}
+
+.attachment-head {
+  margin-bottom: 8px;
+}
+
+.attachment-head h4 {
+  margin-bottom: 0;
+}
+
+.attachment-add-btn {
+  min-width: 32px;
+  padding: 0 8px;
+}
+
+.attachment-file-input {
+  display: none;
+}
+
+.attachment-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  border-bottom: 1px solid #ecf0f5;
+  padding: 10px 0;
+}
+
+.attachment-row:last-child {
+  border-bottom: none;
+}
+
+.attachment-main {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.attachment-text {
+  min-width: 0;
+  display: grid;
+  gap: 2px;
+}
+
+.attachment-text span {
+  color: #64748b;
+  font-size: 12px;
+}
+
+.attachment-row.is-removed {
+  opacity: 0.6;
+}
+
+.attachment-row.is-removed .attachment-text strong {
+  text-decoration: line-through;
+}
+
+.attachment-queue-title {
+  font-size: 12px;
+  color: #64748b;
+  font-weight: 700;
+  padding: 8px 0 2px;
+}
+
 .custom-field-row {
   grid-template-columns: minmax(110px, 220px) minmax(0, 1fr) auto;
 }
@@ -1253,6 +1322,64 @@ input[type='file'].input::file-selector-button:hover {
   height: 1px;
   background: var(--line);
   margin: 8px 0 10px;
+}
+
+.import-summary-dialog {
+  max-width: 520px;
+  text-align: left;
+  position: relative;
+  padding-top: 16px;
+}
+
+.import-summary-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  border: none;
+  background: transparent;
+  color: #64748b;
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.import-summary-close:hover {
+  color: #0f172a;
+}
+
+.import-summary-table-wrap {
+  margin-top: 8px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.import-summary-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.import-summary-table th,
+.import-summary-table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--line);
+}
+
+.import-summary-table th {
+  text-align: left;
+  color: #475467;
+  background: #f8fafc;
+}
+
+.import-summary-table td:last-child,
+.import-summary-table th:last-child {
+  text-align: right;
+  width: 96px;
+}
+
+.import-summary-table tbody tr:last-child td {
+  border-bottom: none;
 }
 
 .settings-twofactor-grid {

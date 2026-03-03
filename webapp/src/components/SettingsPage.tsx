@@ -182,6 +182,7 @@ export default function SettingsPage(props: SettingsPageProps) {
                   props.onNotify?.('success', t('txt_recovery_code_copied'));
                 }}
               >
+                <Clipboard size={14} className="btn-icon" />
                 {t('txt_copy_code')}
               </button>
             </div>

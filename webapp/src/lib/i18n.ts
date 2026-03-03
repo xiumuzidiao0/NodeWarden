@@ -328,6 +328,10 @@ const messages: Record<Locale, Record<string, string>> = {
     txt_totp_verify_failed: "TOTP verify failed",
     txt_passkey: "Passkey",
     txt_passkey_created_at_value: "Created at {value}",
+    txt_attachments: "Attachments",
+    txt_upload_attachments: "Upload attachments",
+    txt_new_attachments: "New attachments",
+    txt_marked_for_removal_count: "{count} attachment(s) will be removed on save",
     txt_trash: "Trash",
     txt_trust_this_device_for_30_days: "Trust this device for 30 days",
     txt_trusted_until: "Trusted Until",
@@ -729,9 +733,90 @@ const zhCNOverrides: Record<string, string> = {
   txt_copied: '已复制',
 };
 
-zhCNOverrides.txt_lock = '\u9501\u5b9a';
+zhCNOverrides.txt_lock = '锁定';
 zhCNOverrides.txt_passkey = 'Passkey';
-zhCNOverrides.txt_passkey_created_at_value = '\u521b\u5efa\u4e8e {value}';
+zhCNOverrides.txt_passkey_created_at_value = '创建于 {value}';
+zhCNOverrides.txt_attachments = '附件';
+zhCNOverrides.txt_upload_attachments = '上传附件';
+zhCNOverrides.txt_new_attachments = '待上传附件';
+zhCNOverrides.txt_marked_for_removal_count = '保存后将删除 {count} 个附件';
+messages.en.txt_import = 'Import';
+messages.en.txt_export = 'Export';
+messages.en.txt_format = 'Format';
+messages.en.txt_source_file = 'Source file';
+messages.en.txt_folder_handling = 'Folder handling';
+messages.en.txt_import_folder_mode_original = 'Original path from import file';
+messages.en.txt_import_folder_mode_none = 'No folder';
+messages.en.txt_import_folder_mode_target = 'One selected folder';
+messages.en.txt_target_folder = 'Target folder';
+messages.en.txt_select_folder_placeholder = '-- Select folder --';
+messages.en.txt_import_vault_data_hint = 'Import vault data into your current account.';
+messages.en.txt_export_vault_data_hint = 'Export vault data from your current account.';
+messages.en.txt_encrypted_mode = 'Encrypted mode';
+messages.en.txt_account_verification = 'Account verification';
+messages.en.txt_password_verification = 'Password verification';
+messages.en.txt_file_password = 'File password';
+messages.en.txt_zip_password_optional = 'ZIP password (optional)';
+messages.en.txt_zip_password = 'ZIP password';
+messages.en.txt_close = 'Close';
+messages.en.txt_total = 'Total';
+messages.en.txt_import_success = 'Import successful';
+messages.en.txt_import_success_number_of_items = 'Imported {count} item(s) in total.';
+messages.en.txt_import_file_password_required = 'Please enter file password.';
+messages.en.txt_import_invalid_zip_password = 'Invalid ZIP password.';
+messages.en.txt_export_completed = 'Export completed';
+messages.en.txt_export_failed = 'Export failed';
+messages.en.txt_import_invalid_password_protected_file = 'Invalid password-protected export file.';
+messages.en.txt_import_decrypt_failed = 'Failed to decrypt import file.';
+messages.en.txt_import_empty_zip_archive = 'Empty zip archive.';
+messages.en.txt_import_no_json_found_in_zip = 'No importable JSON data found in zip archive.';
+messages.en.txt_import_data_json_not_found = 'data.json not found in zip archive.';
+messages.en.txt_import_zip_password_required = 'ZIP password is required.';
+messages.en.txt_import_invalid_json_file = 'Invalid JSON file';
+messages.en.txt_import_failed = 'Import failed';
+messages.en.txt_import_encrypted_file_title = 'Import encrypted file';
+messages.en.txt_import_encrypted_file_message = 'This Bitwarden export is password-protected. Enter the export file password to continue.';
+messages.en.txt_import_encrypted_zip_title = 'Import encrypted ZIP';
+messages.en.txt_import_encrypted_zip_message = 'This ZIP archive is password-protected. Enter the ZIP password to continue.';
+
+zhCNOverrides.txt_import = '导入';
+zhCNOverrides.txt_export = '导出';
+zhCNOverrides.txt_format = '格式';
+zhCNOverrides.txt_source_file = '源文件';
+zhCNOverrides.txt_folder_handling = '文件夹处理';
+zhCNOverrides.txt_import_folder_mode_original = '保留导入文件中的原始路径';
+zhCNOverrides.txt_import_folder_mode_none = '不使用文件夹';
+zhCNOverrides.txt_import_folder_mode_target = '导入到指定文件夹';
+zhCNOverrides.txt_target_folder = '目标文件夹';
+zhCNOverrides.txt_select_folder_placeholder = '-- 选择文件夹 --';
+zhCNOverrides.txt_import_vault_data_hint = '将数据导入到当前账号。';
+zhCNOverrides.txt_export_vault_data_hint = '从当前账号导出数据。';
+zhCNOverrides.txt_encrypted_mode = '加密方式';
+zhCNOverrides.txt_account_verification = '账号验证';
+zhCNOverrides.txt_password_verification = '密码验证';
+zhCNOverrides.txt_file_password = '文件密码';
+zhCNOverrides.txt_zip_password_optional = 'ZIP 密码（可选）';
+zhCNOverrides.txt_zip_password = 'ZIP 密码';
+zhCNOverrides.txt_close = '关闭';
+zhCNOverrides.txt_total = '总计';
+zhCNOverrides.txt_import_success = '数据导入成功';
+zhCNOverrides.txt_import_success_number_of_items = '一共导入了 {count} 个项目。';
+zhCNOverrides.txt_import_file_password_required = '请输入文件密码。';
+zhCNOverrides.txt_import_invalid_zip_password = 'ZIP 密码错误。';
+zhCNOverrides.txt_export_completed = '导出完成';
+zhCNOverrides.txt_export_failed = '导出失败';
+zhCNOverrides.txt_import_invalid_password_protected_file = '密码保护导出文件格式无效。';
+zhCNOverrides.txt_import_decrypt_failed = '导入文件解密失败。';
+zhCNOverrides.txt_import_empty_zip_archive = 'ZIP 压缩包为空。';
+zhCNOverrides.txt_import_no_json_found_in_zip = 'ZIP 内未找到可导入的 JSON 数据。';
+zhCNOverrides.txt_import_data_json_not_found = 'ZIP 内未找到 data.json。';
+zhCNOverrides.txt_import_zip_password_required = '该 ZIP 需要密码。';
+zhCNOverrides.txt_import_invalid_json_file = 'JSON 文件无效';
+zhCNOverrides.txt_import_failed = '导入失败';
+zhCNOverrides.txt_import_encrypted_file_title = '导入加密文件';
+zhCNOverrides.txt_import_encrypted_file_message = '该 Bitwarden 导出文件已加密，请输入文件密码继续。';
+zhCNOverrides.txt_import_encrypted_zip_title = '导入加密 ZIP';
+zhCNOverrides.txt_import_encrypted_zip_message = '该 ZIP 压缩包已加密，请输入 ZIP 密码继续。';
 
 messages['zh-CN'] = { ...messages.en, ...zhCNOverrides };
 
