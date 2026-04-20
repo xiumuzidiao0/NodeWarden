@@ -327,6 +327,8 @@ export async function handleToken(request: Request, env: Env): Promise<Response>
 
     const accessToken = await auth.generateAccessToken(user, deviceSession);
     const refreshToken = await auth.generateRefreshToken(user.id, deviceSession);
+    const accountKeys = buildAccountKeys(user);
+    const userDecryptionOptions = buildUserDecryptionOptions(user);
 
     const response: TokenResponse = {
       access_token: accessToken,
@@ -336,8 +338,8 @@ export async function handleToken(request: Request, env: Env): Promise<Response>
       ...(trustedTwoFactorTokenToReturn ? { TwoFactorToken: trustedTwoFactorTokenToReturn } : {}),
       Key: user.key,
       PrivateKey: user.privateKey,
-      AccountKeys: buildAccountKeys(user),
-      accountKeys: buildAccountKeys(user),
+      AccountKeys: accountKeys,
+      accountKeys: accountKeys,
       Kdf: user.kdfType,
       KdfIterations: user.kdfIterations,
       KdfMemory: user.kdfMemory,
@@ -350,8 +352,8 @@ export async function handleToken(request: Request, env: Env): Promise<Response>
       ApiUseKeyConnector: false,
       scope: 'api offline_access',
       unofficialServer: true,
-      UserDecryptionOptions: buildUserDecryptionOptions(user),
-      userDecryptionOptions: buildUserDecryptionOptions(user),
+      UserDecryptionOptions: userDecryptionOptions,
+      userDecryptionOptions: userDecryptionOptions,
     };
 
     const baseResponse = jsonResponse(response);
@@ -448,7 +450,12 @@ export async function handleToken(request: Request, env: Env): Promise<Response>
     );
 
     const { accessToken, user, device } = result;
+    if (device?.identifier) {
+      await storage.touchDeviceLastSeen(user.id, device.identifier);
+    }
     const newRefreshToken = await auth.generateRefreshToken(user.id, device);
+    const accountKeys = buildAccountKeys(user);
+    const userDecryptionOptions = buildUserDecryptionOptions(user);
 
     const response: TokenResponse = {
       access_token: accessToken,
@@ -457,8 +464,8 @@ export async function handleToken(request: Request, env: Env): Promise<Response>
       ...(shouldUseWebSession(request) ? { web_session: true } : { refresh_token: newRefreshToken }),
       Key: user.key,
       PrivateKey: user.privateKey,
-      AccountKeys: buildAccountKeys(user),
-      accountKeys: buildAccountKeys(user),
+      AccountKeys: accountKeys,
+      accountKeys: accountKeys,
       Kdf: user.kdfType,
       KdfIterations: user.kdfIterations,
       KdfMemory: user.kdfMemory,
@@ -471,8 +478,8 @@ export async function handleToken(request: Request, env: Env): Promise<Response>
       ApiUseKeyConnector: false,
       scope: 'api offline_access',
       unofficialServer: true,
-      UserDecryptionOptions: buildUserDecryptionOptions(user),
-      userDecryptionOptions: buildUserDecryptionOptions(user),
+      UserDecryptionOptions: userDecryptionOptions,
+      userDecryptionOptions: userDecryptionOptions,
     };
 
     const baseResponse = jsonResponse(response);
