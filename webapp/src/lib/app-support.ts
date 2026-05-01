@@ -1,6 +1,6 @@
 import { hkdf } from '@/lib/crypto';
 import { t } from '@/lib/i18n';
-import type { Cipher, VaultDraft } from '@/lib/types';
+import type { VaultDraft } from '@/lib/types';
 import type { ImportResultSummary } from '@/components/ImportPage';
 
 const SEND_KEY_SALT = 'bitwarden-send';
@@ -26,9 +26,28 @@ export function looksLikeCipherString(value: string): boolean {
   return /^\d+\.[A-Za-z0-9+/=]+\|[A-Za-z0-9+/=]+(?:\|[A-Za-z0-9+/=]+)?$/.test(String(value || '').trim());
 }
 
-export function asText(value: unknown): string {
+function asText(value: unknown): string {
   if (value === null || value === undefined) return '';
   return String(value);
+}
+
+function isImportTotpFieldName(value: unknown): boolean {
+  const name = asText(value).trim().toLowerCase().replace(/[\s_-]+/g, '');
+  return [
+    'totp',
+    'totpuri',
+    'otp',
+    'otpuri',
+    'otpurl',
+    'otpauth',
+    'onetimepassword',
+    'onetimepasscode',
+    '2fa',
+    'twofactor',
+    'twofactorauthentication',
+    'authenticator',
+    'verificationcode',
+  ].includes(name);
 }
 
 export function readInviteCodeFromUrl(): string {
@@ -87,7 +106,7 @@ export function summarizeImportResult(
   };
 }
 
-export function buildEmptyImportDraft(type: number): VaultDraft {
+function buildEmptyImportDraft(type: number): VaultDraft {
   return {
     type,
     favorite: false,
@@ -162,6 +181,7 @@ export function importCipherToDraft(cipher: Record<string, unknown>, folderId: s
     draft.loginPassword = asText(login.password);
     draft.loginTotp = asText(login.totp);
     const urisRaw = Array.isArray(login.uris) ? login.uris : [];
+    const seenUris = new Set<string>();
     const uris = urisRaw
       .map((u) => {
         const row = (u || {}) as Record<string, unknown>;
@@ -176,8 +196,21 @@ export function importCipherToDraft(cipher: Record<string, unknown>, folderId: s
           ),
         };
       })
-      .filter((u) => !!u.uri);
+      .filter((u) => {
+        if (!u.uri) return false;
+        const key = u.uri.toLowerCase();
+        if (seenUris.has(key)) return false;
+        seenUris.add(key);
+        return true;
+      });
     draft.loginUris = uris.length ? uris : [{ uri: '', match: null, originalUri: '', extra: {} }];
+    if (!draft.loginTotp) {
+      const totpFieldIndex = draft.customFields.findIndex((field) => isImportTotpFieldName(field.label));
+      if (totpFieldIndex >= 0) {
+        draft.loginTotp = asText(draft.customFields[totpFieldIndex].value);
+        draft.customFields = draft.customFields.filter((_, index) => index !== totpFieldIndex);
+      }
+    }
     draft.loginFido2Credentials = Array.isArray(login.fido2Credentials)
       ? login.fido2Credentials.filter((item): item is Record<string, unknown> => !!item && typeof item === 'object')
       : [];
@@ -246,6 +279,3 @@ export async function deriveSendKeyParts(sendKeyMaterial: Uint8Array): Promise<{
   return { enc: derived.slice(0, 32), mac: derived.slice(32, 64) };
 }
 
-export function findCipherById(ciphers: Cipher[], id: string): Cipher | null {
-  return ciphers.find((cipher) => cipher.id === id) || null;
-}
